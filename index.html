@@ -9,26 +9,29 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="manifest" href="manifest.json" />
     
+    <!-- Load Babel to transpile TSX in the browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <script>
       tailwind.config = {
         darkMode: 'class',
         theme: {
           extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-            },
+            fontFamily: { sans: ['Inter', 'sans-serif'] },
             colors: {
-              primary: '#10b981', // emerald-500
-              secondary: '#3b82f6', // blue-500
-              dark: '#09090b', // zinc-950
-              card: '#18181b', // zinc-900
+              primary: '#10b981',
+              secondary: '#3b82f6',
+              dark: '#09090b',
+              card: '#18181b',
             }
           }
         }
       }
     </script>
+    
     <style>
       body {
         background-color: #09090b;
@@ -41,23 +44,34 @@
       ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 3px; }
       .safe-area-bottom { padding-bottom: env(safe-area-inset-bottom); }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
-</head>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+        "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+        "react/": "https://esm.sh/react@^19.2.3/",
+        "react": "https://esm.sh/react@^19.2.3"
+      }
+    }
+    </script>
+  </head>
   <body>
     <div id="root"></div>
-    <!-- THIS IS THE CRITICAL LINE THAT WAS MISSING -->
-    <script type="module" src="./index.tsx"></script>
+
+    <!-- 
+      We use type="text/babel" so Babel transpiles the JSX/TSX.
+      The data-type="module" ensures imports work correctly.
+      The data-presets include 'typescript' and 'react'.
+    -->
+    <script 
+      type="text/babel" 
+      data-type="module" 
+      data-presets="typescript,react" 
+      src="./index.tsx"
+    ></script>
+
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -69,6 +83,5 @@
         });
       }
     </script>
-  <script type="module" src="/index.tsx"></script>
-</body>
+  </body>
 </html>
